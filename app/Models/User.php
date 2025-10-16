@@ -62,4 +62,9 @@ class User extends Authenticatable
                     ->wherePivot('active', true)
                     ->exists();
     }
+
+    public function links(){
+
+        return $this->hasMany('App\Models\SHortLink');
+    }
 }
