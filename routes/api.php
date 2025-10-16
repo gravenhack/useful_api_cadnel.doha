@@ -10,13 +10,15 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/modules', [ModuleController::class, 'index'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::post('/modules/{id}/activate', [ModuleController::class, 'activate'])->middleware('auth:sanctum');
+    Route::get('/modules', [ModuleController::class, 'index']);
 
-Route::post('/modules/{id}/deactivate', [ModuleController::class, 'deactivate'])->middleware('auth:sanctum');
-
+    Route::post('/modules/{id}/activate', [ModuleController::class, 'activate']);
+    
+    Route::post('/modules/{id}/deactivate', [ModuleController::class, 'deactivate']);
+});
